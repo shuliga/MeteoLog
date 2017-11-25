@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return render_template('index.html', get_avg_temp())
+    return render_template('index.html', **get_avg_temp())
 
 
 @app.errorhandler(500)
