@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>Середня температура у Львові</h1>
-    
+<div>
+{% for temp in temps %}
+    <span><a href="{{ href }}">{{ temp }} <span>
+{% endfor %}
+    <h3>Сер. температура за {{date}}: {{avg_temp}}</h3>
+</div>    
 {% endblock %}
