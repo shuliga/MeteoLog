@@ -4,14 +4,14 @@ sys.setdefaultencoding('utf-8')
 import urllib2
 import lxml.html as LH	
   
-def get_avg_temp():  
+def get_avg_temp(arg_month = -1):  
   min_year = 2016
   curr_year = int(time.strftime("%Y")) 
   days_shift = 0;
   
   temp_arr = []
   cnt = 0;
-  arg_month = -1 if len(sys.argv) <= 1 else int(sys.argv[1])
+#  arg_month = -1 if len(sys.argv) <= 1 else int(sys.argv[1])
 
   year = curr_year
   
