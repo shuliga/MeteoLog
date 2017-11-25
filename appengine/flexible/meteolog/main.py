@@ -1,6 +1,6 @@
 import logging
-import avg_temp
 
+from avg_temp import get_avg_temp
 from flask import Flask
 
 
@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return render_template('index.html')
+    return render_template('index.html', cget_avg_temp())
 
 
 @app.errorhandler(500)
