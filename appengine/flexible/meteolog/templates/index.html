@@ -3,8 +3,8 @@
     <h1>Середня температура у Львові</h1>
 <div>
 {% for temp in temps %}
-    <span><a href="{{ href }}">{{ temp }} <span>
+    <span>{{ temp }}{{'' if loop.last else ', '}}<span>
 {% endfor %}
-    <h3>Сер. температура за {{date}}: {{avg_temp}}</h3>
+    <h3>Сер. температура за {{date}}: {{avg_temp}} °C</h3>
 </div>    
 {% endblock %}
