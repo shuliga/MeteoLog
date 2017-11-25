@@ -1,11 +1,10 @@
-if __name__ == '__main__':
-  import sys, os, codecs, math, time, datetime, calendar
-  reload(sys)
-  sys.setdefaultencoding('utf-8')
-  import requests
-  import lxml.html as LH	
+import sys, os, codecs, math, time, datetime, calendar
+reload(sys)
+sys.setdefaultencoding('utf-8')
+import requests
+import lxml.html as LH	
   
-  
+def get_avg_temp():  
   min_year = 2016
   curr_year = int(time.strftime("%Y")) 
   days_shift = 0;
@@ -40,8 +39,9 @@ if __name__ == '__main__':
   monthdays = calendar.monthrange(year, month)[1]
   date = '{}/01/{}'.format(month, year)
   url = 'http://www.accuweather.com/en/ua/lviv/324561/month/324561?monyr={}'.format(date)
-  print "Requesting Weather dada from URL:{}".format(url)
-  print 'For month {}'.format(datetime.datetime.strptime(date,"%m/%d/%Y").strftime("%b"))
+#  print "Requesting Weather dada from URL:{}".format(url)
+  date_str = datetime.datetime.strptime(date,"%m/%d/%Y").strftime("%b")
+#  print 'For month {}'.format()
   r = requests.get(url)
   root = LH.fromstring(r.content)
   day_count = 0
@@ -54,16 +54,17 @@ if __name__ == '__main__':
           if site_month != month or (days_shift < 0 and day_count >= monthdays + days_shift) or (days_shift > 0 and day_count <= days_shift):
             continue
         except:
-          print sys.exc_info()[0]
+#          print sys.exc_info()[0]
           continue
         temp_hi = cell.xpath(".//span[contains(@class, 'large-temp')]/text()")[0][:-1]
         temp_lo = cell.xpath(".//span[contains(@class, 'small-temp')]/text()")[0].replace('/','')[:-1]
         temp_val = (int(temp_hi) + int(temp_lo)) / 2
         temp_arr.append(temp_val)
   if days_shift > 0:
-    print 'Skipped {} days from the begining of month'.format(days_shift)
+#    print 'Skipped {} days from the begining of month'.format(days_shift)
   if days_shift < 0:
-    print 'Skipped {} days from the end of month'.format(abs(days_shift))
-  print temp_arr
-  print 'The average temperature for {} days is: {}'.format(len(temp_arr), round(reduce(lambda x, y: float(x + y), temp_arr) / float(len(temp_arr)), 1))
-  
+#    print 'Skipped {} days from the end of month'.format(abs(days_shift))
+#  print temp_arr
+  avg_temp = round(reduce(lambda x, y: float(x + y), temp_arr) / float(len(temp_arr)), 1)
+#  print 'The average temperature for {} days is: {}'.format(len(temp_arr), )
+  return {'temps': temp_arr,  'avg_temp': avg_temp, 'date': date_str}
