@@ -1,10 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Середня температура у Львові</h1>
-<div>
+    <h1 class="display-3">Середня температура у Львові</h1>
+<p>
 {% for temp in temps %}
-    <span>{{ temp }}{{'' if loop.last else ', '}}<span>
+    <div style="display:inline-block">{{ temp[0] }}</br>{{ temp[1] }}°
+    </div>
 {% endfor %}
+</p>
     <h3>Сер. температура за {{date}}: {{avg_temp}}°C</h3>
-</div>    
 {% endblock %}
