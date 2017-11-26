@@ -66,7 +66,8 @@ def get_avg_temp(arg_month = -1):
       for cell in row.xpath('td'):
         day_count += 1
         try:
-          site_month = int(cell.xpath(".//h3[contains(@class, 'date')]/text()")[0].split('/')[0][4:])
+          site_date = cell.xpath(".//h3[contains(@class, 'date')]/text()")[0]
+          site_month = int(site_date.split('/')[0][4:])
           if site_month != month or (days_shift < 0 and day_count >= monthdays + days_shift) or (days_shift > 0 and day_count <= days_shift):
             continue
         except:
@@ -75,12 +76,12 @@ def get_avg_temp(arg_month = -1):
         temp_hi = cell.xpath(".//span[contains(@class, 'large-temp')]/text()")[0][:-1]
         temp_lo = cell.xpath(".//span[contains(@class, 'small-temp')]/text()")[0].replace('/','')[:-1]
         temp_val = (int(temp_hi) + int(temp_lo)) / 2
-        temp_arr.append(temp_val)
+        temp_arr.append((site_date,temp_val))
 #  if days_shift > 0:
 #    print 'Skipped {} days from the begining of month'.format(days_shift)
 #  if days_shift < 0:
 #    print 'Skipped {} days from the end of month'.format(abs(days_shift))
 #  print temp_arr
-  avg_temp = round(reduce(lambda x, y: float(x + y), temp_arr) / float(len(temp_arr)), 1)
+  avg_temp = round(reduce(lambda x, y: float(x + y), map((lambda x: x[1]),temp_arr)) / float(len(temp_arr)), 1)
 #  print 'The average temperature for {} days is: {}'.format(len(temp_arr), avg_temp)
   return {'temps': temp_arr,  'avg_temp': avg_temp, 'date': date_str}
