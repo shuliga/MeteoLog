@@ -3,7 +3,7 @@
     <h1 class="display-3">Середня температура у Львові</h1>
 <p>
 {% for temp in temps %}
-    <div style="display:inline-block;margin-bottom:0.5em;{{'color:red;' if (temp[0].startswith('Sun') or temp[0].startswith('Sat')) else '' }}">{{ temp[0] }}<br/>{{ temp[1] }}°
+    <div style="display:inline-block;margin-bottom:0.5em;margin-right:1em;{{'color:red;' if (temp[0].startswith('Sun') or temp[0].startswith('Sat')) else '' }}">{{ temp[0] }}<br/>{{ temp[1] }}°
     </div>
 {% endfor %}
 </p>
